@@ -1,0 +1,27 @@
+{
+  "name": "graphql-kanban",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engines": {
+    "node": "12.22.7"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "nodemon --inspect app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "agitanggriawan",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-core": "^3.5.0",
+    "apollo-server-express": "^3.5.0",
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
+    "graphql": "^16.0.1",
+    "knex": "^0.95.14",
+    "nanoid": "^3.1.30",
+    "objection": "^3.0.0",
+    "pg": "^8.7.1"
+  }
+}
