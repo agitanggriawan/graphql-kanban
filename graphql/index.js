@@ -2,9 +2,11 @@ const { gql } = require('apollo-server-express');
 
 const schemaUsers = require('./schemaUsers');
 const schemaBoards = require('./schemaBoards');
+const schemaCards = require('./schemaCards');
 
 const resolverUsers = require('./resolverUsers');
 const resolverBoards = require('./resolverBoards');
+const resolverCards = require('./resolverCards');
 
 const baseSchema = gql`
   scalar Date
@@ -22,8 +24,8 @@ const baseSchema = gql`
   }
 `;
 
-const schemas = [baseSchema, schemaUsers, schemaBoards];
-const resolvers = [resolverUsers, resolverBoards];
+const schemas = [baseSchema, schemaUsers, schemaBoards, schemaCards];
+const resolvers = [resolverUsers, resolverBoards, resolverCards];
 
 module.exports = {
   typeDefs: schemas,
