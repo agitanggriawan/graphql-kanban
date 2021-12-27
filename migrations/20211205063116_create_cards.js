@@ -7,8 +7,7 @@ exports.up = async (knex) => {
       .inTable('boards')
       .index()
       .notNullable();
-    t.text('title').notNullable();
-    t.text('description').notNullable();
+    t.jsonb('task').notNullable();
     t.timestamps(true, true);
   });
 };

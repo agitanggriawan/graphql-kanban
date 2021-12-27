@@ -8,6 +8,7 @@ class Board extends BaseModel {
 
   static get relationMappings() {
     const UserBoard = require('./UserBoard');
+    const Card = require('./Card');
 
     return {
       users_boards: {
@@ -16,6 +17,14 @@ class Board extends BaseModel {
         join: {
           from: 'boards.id',
           to: 'users_boards.board_id',
+        },
+      },
+      card: {
+        relation: BaseModel.HasOneRelation,
+        modelClass: Card,
+        join: {
+          from: 'boards.id',
+          to: 'cards.board_id',
         },
       },
     };

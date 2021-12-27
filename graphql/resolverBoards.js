@@ -17,6 +17,30 @@ const resolvers = {
               user_id: args.data.user_id,
             },
           ],
+          card: {
+            task: {
+              0: {
+                name: 'Backlog',
+                items: [],
+              },
+              1: {
+                name: 'To do',
+                items: [],
+              },
+              2: {
+                name: 'Doing',
+                items: [],
+              },
+              3: {
+                name: 'Done',
+                items: [],
+              },
+              4: {
+                name: 'Check',
+                items: [],
+              },
+            },
+          },
         };
 
         return Board.query().insertGraphAndFetch(data);
