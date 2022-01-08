@@ -7,6 +7,7 @@ const { Model } = require('objection');
 
 const { typeDefs, resolvers } = require('./graphql');
 const knexConfig = require('./knexfile');
+const { authorizeToken } = require('./utils');
 
 const environment = process.env.NODE_ENV || 'local';
 Model.knex(Knex(knexConfig[environment]));
@@ -18,6 +19,13 @@ async function startApolloServer(typeDefs, resolvers) {
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: ({ req }) => {
+      const data = authorizeToken(req);
+
+      return {
+        data,
+      };
+    },
   });
 
   await server.start();

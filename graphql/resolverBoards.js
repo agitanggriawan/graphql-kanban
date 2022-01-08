@@ -3,8 +3,11 @@ const { Board } = require('../models');
 
 const resolvers = {
   Query: {
-    boards: async () => {
-      return Board.query().orderBy('id', 'desc');
+    boards: async (_, __, context) => {
+      return Board.query()
+        .joinRelated('users_boards')
+        .where('users_boards.user_id', context.data.jwt.id)
+        .orderBy('id', 'desc');
     },
   },
   Mutation: {
