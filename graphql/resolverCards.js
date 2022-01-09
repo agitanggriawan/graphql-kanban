@@ -10,6 +10,7 @@ const resolvers = {
             'board_id',
             Board.query().select('id').findOne({ bid: args.bid })
           )
+          .withGraphFetched('board.users')
           .first();
       } catch (error) {
         console.log('ERROR', error);

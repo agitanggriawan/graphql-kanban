@@ -1,5 +1,5 @@
 const { ApolloError } = require('apollo-server-express');
-const { Board } = require('../models');
+const { Board, UserBoard, User } = require('../models');
 
 const resolvers = {
   Query: {
@@ -47,6 +47,23 @@ const resolvers = {
         };
 
         return Board.query().insertGraphAndFetch(data);
+      } catch (error) {
+        console.log('ERROR', error);
+        throw new ApolloError(error, 'ERROR', null);
+      }
+    },
+    addMember: async (_, args) => {
+      try {
+        console.log('==> Accessing addMember');
+        const users = await User.query()
+          .select('id')
+          .whereIn('username', args.user_ids);
+        const data = users.map((x) => ({
+          board_id: args.board_id,
+          user_id: x.id,
+        }));
+
+        return UserBoard.query().insert(data);
       } catch (error) {
         console.log('ERROR', error);
         throw new ApolloError(error, 'ERROR', null);

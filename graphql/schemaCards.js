@@ -13,6 +13,7 @@ const typeDefs = gql`
     id: ID!
     cid: String!
     task: JSON
+    board: Board
   }
 `;
 

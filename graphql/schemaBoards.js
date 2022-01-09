@@ -7,6 +7,7 @@ const typeDefs = gql`
 
   extend type Mutation {
     createBoard(data: InBoard!): Board
+    addMember(board_id: ID!, user_ids: [ID!]!): [JSON]
   }
 
   type Board {
@@ -16,6 +17,7 @@ const typeDefs = gql`
     jsonb: JSON
     created_at: DateTime
     updated_at: DateTime
+    users: [User]
   }
 
   input InBoard {

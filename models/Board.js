@@ -9,6 +9,7 @@ class Board extends BaseModel {
   static get relationMappings() {
     const UserBoard = require('./UserBoard');
     const Card = require('./Card');
+    const User = require('./User');
 
     return {
       users_boards: {
@@ -25,6 +26,18 @@ class Board extends BaseModel {
         join: {
           from: 'boards.id',
           to: 'cards.board_id',
+        },
+      },
+      users: {
+        relation: BaseModel.ManyToManyRelation,
+        modelClass: User,
+        join: {
+          from: 'boards.id',
+          through: {
+            from: 'users_boards.board_id',
+            to: 'users_boards.user_id',
+          },
+          to: 'users.id',
         },
       },
     };

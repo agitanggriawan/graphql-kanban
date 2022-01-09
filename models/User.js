@@ -15,6 +15,21 @@ class User extends BaseModel {
 
     return false;
   }
+
+  static get relationMappings() {
+    const UserBoard = require('./UserBoard');
+
+    return {
+      users_boards: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: UserBoard,
+        join: {
+          from: 'users.id',
+          to: 'users_boards.user_id',
+        },
+      },
+    };
+  }
 }
 
 module.exports = User;
