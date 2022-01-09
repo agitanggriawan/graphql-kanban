@@ -1,12 +1,11 @@
 const { ApolloError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, UserBoard } = require('../models');
 const { generateToken } = require('../utils');
 
 const resolvers = {
   Query: {
     authenticate: async (_, args) => {
       console.log('==> Accessing authenticate');
-      console.log('==> args', args);
 
       try {
         const user = await User.query().findOne({ username: args.username });
@@ -32,6 +31,20 @@ const resolvers = {
         console.log('==> Error Accessing authenticate', error);
         throw new ApolloError(error, 'INTERNAL_SERVER_ERROR', null);
       }
+    },
+    users: async (_, args) => {
+      return User.query()
+        .modify((qb) => {
+          if (args.board_id) {
+            qb.whereNotIn(
+              'id',
+              UserBoard.query().select('user_id').where({
+                board_id: args.board_id,
+              })
+            );
+          }
+        })
+        .orderBy('username', 'asc');
     },
   },
 };
