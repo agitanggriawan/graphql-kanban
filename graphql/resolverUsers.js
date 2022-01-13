@@ -1,5 +1,5 @@
 const { ApolloError } = require('apollo-server-express');
-const { User, UserBoard } = require('../models');
+const { User, UserBoard, Board } = require('../models');
 const { generateToken } = require('../utils');
 
 const resolvers = {
@@ -33,14 +33,18 @@ const resolvers = {
       }
     },
     users: async (_, args) => {
+      console.log('board', args);
       return User.query()
         .modify((qb) => {
           if (args.board_id) {
             qb.whereNotIn(
               'id',
-              UserBoard.query().select('user_id').where({
-                board_id: args.board_id,
-              })
+              UserBoard.query()
+                .select('user_id')
+                .where(
+                  'board_id',
+                  Board.query().select('id').findOne({ bid: args.board_id })
+                )
             );
           }
         })
