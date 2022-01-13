@@ -63,7 +63,7 @@ const resolvers = {
           user_id: x.id,
         }));
 
-        return UserBoard.query().insert(data);
+        return UserBoard.query().insertAndFetch(data).withGraphFetched('user');
       } catch (error) {
         console.log('ERROR', error);
         throw new ApolloError(error, 'ERROR', null);
